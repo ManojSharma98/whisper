@@ -1,7 +1,10 @@
 import { Router } from "express";
+import { protectRoute } from "../middleware/auth";
+import { authCallback, getMe } from "../controllers/authController";
 
 const router = Router();
 
-// Define your authentication routes here
+router.get("/me", protectRoute, getMe);
+router.post("/callback", protectRoute, authCallback);
 
 export default router;
