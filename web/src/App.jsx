@@ -5,6 +5,7 @@ function App() {
   return (
     <>
       <header>
+        <h1>Welcome to Whisper</h1>
         <Show when="signed-out">
           <SignInButton mode="modal" />
           <SignUpButton mode="modal" />
