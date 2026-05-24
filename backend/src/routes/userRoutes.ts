@@ -1,7 +1,8 @@
 import { Router } from "express";
+import { protectRoute } from "../middleware/auth";
+import { getUsers } from "../controllers/userController";
 
 const router = Router();
 
-// Define your authentication routes here
-
+router.get("/", protectRoute, getUsers);
 export default router;
