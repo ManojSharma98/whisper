@@ -17,7 +17,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
     "http://localhost:5173",
     "http://localhost:8081",
     process.env.FRONTEND_URL as string,
-  ];
+  ].filter(Boolean) as string[];
 
   const io = new SocketServer(httpServer, {
     cors: {
@@ -94,7 +94,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
           chat.lastMessageAt = new Date();
           chat.save();
 
-          await message.populate("sender", "name email avatar");
+          await message.populate("sender", "name avatar");
 
           // emit the new message to all participants in the chat
           io.to(`chat:${chatId}`).emit("new-message", {
