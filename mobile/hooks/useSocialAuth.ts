@@ -10,7 +10,9 @@ function useAuthSocial() {
     setLoadingStrategy(strategy);
     try {
       const { setActive, createdSessionId } = await startSSOFlow({ strategy });
-      if (!createdSessionId || !setActive) {
+      if (createdSessionId && setActive) {
+        await setActive({ session: createdSessionId });
+      } else {
         const providerName = strategy === "oauth_google" ? "Google" : "Apple";
         alert(`Sign-in incomplete ${providerName}`);
       }
