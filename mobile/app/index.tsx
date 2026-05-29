@@ -1,9 +1,11 @@
-import { Text, View } from "react-native";
+import { Redirect } from "expo-router";
 
 export default function Index() {
-  return (
-    <View className="flex-1 justify-center items-center">
-      <Text className="text-2xl font-bold">Welcome to Whispe dghrehirbr</Text>
-    </View>
-  );
+  const isAuthenticated = false; // Replace with your authentication logic
+
+  if (isAuthenticated) {
+    return <Redirect href="/(tabs)" />;
+  }
+
+  return <Redirect href="/(auth)" />;
 }
