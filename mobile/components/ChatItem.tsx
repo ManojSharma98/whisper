@@ -1,3 +1,4 @@
+import { useSocketStore } from "@/lib/socket";
 import { Chat } from "@/types";
 import { formatDistanceToNow } from "date-fns";
 import { Image } from "expo-image";
@@ -5,14 +6,10 @@ import { Pressable, Text, View } from "react-native";
 
 const ChatItem = ({ chat, onPress }: { chat: Chat; onPress: () => void }) => {
   const participant = chat.participants;
-  //   const { onlineUsers, typingUsers, unreadChats } = useSocketStore();
-  //   const isOnline = onlineUsers.has(participant._id) || false;
-  //   const isTyping = typingUsers.get(chat._id) === participant._id || false;
-  //   const hasUnread = unreadChats.has(chat._id) || false;
-
-  const isOnline = false;
-  const isTyping = false;
-  const hasUnread = false;
+  const { onlineUsers, typingUsers, unreadChats } = useSocketStore();
+  const isOnline = onlineUsers.has(participant._id) || false;
+  const isTyping = typingUsers.get(chat._id) === participant._id || false;
+  const hasUnread = unreadChats.has(chat._id) || false;
 
   return (
     <Pressable

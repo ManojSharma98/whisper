@@ -1,6 +1,7 @@
 import UserItem from "@/components/UserItem";
 import { useGetOrCreateChat } from "@/hooks/useChats";
 import { useUsers } from "@/hooks/useUsers";
+import { useSocketStore } from "@/lib/socket";
 import { User } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -17,9 +18,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const NewChatScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
+
   const { data: allUsers, isLoading } = useUsers();
   const { mutate: getOrCreateChat, isPending: isCreatingChat } =
     useGetOrCreateChat();
+  const { onlineUsers } = useSocketStore();
 
   // client-side filtering
   const users = allUsers?.filter((u) => {
@@ -34,15 +37,16 @@ const NewChatScreen = () => {
   const handleUserSelect = (user: User) => {
     getOrCreateChat(user._id, {
       onSuccess: (chat) => {
-        router.dismiss(); // go back to the previous screen (chats list)
+        router.dismiss(); // go -1
+
         setTimeout(() => {
           router.push({
             pathname: "/chat/[id]",
             params: {
               id: chat._id,
-              participantId: chat.participants?._id,
-              name: chat.participants?.name,
-              avatar: chat.participants?.avatar,
+              participantId: chat.participants._id,
+              name: chat.participants.name,
+              avatar: chat.participants.avatar,
             },
           });
         }, 100);
@@ -71,6 +75,7 @@ const NewChatScreen = () => {
               </Text>
             </View>
           </View>
+
           {/* SEARCH BAR */}
           <View className="px-5 pt-3 pb-2 bg-surface">
             <View className="flex-row items-center bg-surface-card rounded-full px-3 py-1.5 gap-2 border border-surface-light">
@@ -85,7 +90,9 @@ const NewChatScreen = () => {
               />
             </View>
           </View>
+
           {/* USERS LIST */}
+
           <View className="flex-1 bg-surface">
             {isCreatingChat || isLoading ? (
               <View className="flex-1 items-center justify-center">
@@ -114,7 +121,7 @@ const NewChatScreen = () => {
                   <UserItem
                     key={user._id}
                     user={user}
-                    isOnline={true}
+                    isOnline={onlineUsers.has(user._id)}
                     onPress={() => handleUserSelect(user)}
                   />
                 ))}

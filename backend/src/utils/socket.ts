@@ -117,12 +117,31 @@ export const initializeSocket = (httpServer: HttpServer) => {
       },
     );
 
-    socket.on("typing", async (data: { chatId: string }) => {
-      const { chatId } = data;
-      socket.to(`chat:${chatId}`).emit("typing", {
-        chatId,
+    socket.on("typing", async (data: { chatId: string; isTyping: boolean }) => {
+      const { chatId, isTyping } = data;
+      const typingPayload = {
         userId,
-      });
+        chatId,
+        isTyping,
+      };
+      socket.to(`chat:${chatId}`).emit("typing", typingPayload);
+      
+      // also emit to other participant's personal room (for chat list view)
+      try {
+        const chat = await Chat.findById(data.chatId);
+        if (chat) {
+          const otherParticipantId = chat.participants.find(
+            (p: any) => p.toString() !== userId,
+          );
+          if (otherParticipantId) {
+            socket
+              .to(`user:${otherParticipantId}`)
+              .emit("typing", typingPayload);
+          }
+        }
+      } catch (error) {
+        // silently fail - typing indicator is not critical
+      }
     });
 
     socket.on("disconnect", () => {

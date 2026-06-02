@@ -1,4 +1,5 @@
 import AuthSync from "@/components/AuthSync";
+import SocketConnection from "@/components/SocketConnection";
 import { ClerkProvider } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 import * as Sentry from "@sentry/react-native";
@@ -43,6 +44,7 @@ export default Sentry.wrap(function RootLayout() {
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <QueryClientProvider client={queryClient}>
         <AuthSync />
+        <SocketConnection />
         <Stack
           screenOptions={{
             headerShown: false,
