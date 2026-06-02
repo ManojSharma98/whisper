@@ -114,6 +114,7 @@ docker run -p 3000:3000 --env MONGODB_URI=<your mongodb uri> --env CLERK_SECRET_
 - The mobile app is built with Expo and uses `socket.io-client` for real-time messaging.
 - The web client and backend are both configured for Clerk authentication.
 
-## License
+<img width="292" height="615" alt="Screenshot 2026-06-02 at 7 17 25 PM" src="https://github.com/user-attachments/assets/7b6662ae-bd97-4743-88c3-14b2628e382f" />
+<img width="292" height="615" alt="Screenshot 2026-06-02 at 7 17 14 PM" src="https://github.com/user-attachments/assets/51f1b6c4-2044-4eea-8942-822b694536ab" />
+<img width="292" height="615" alt="Screenshot 2026-06-02 at 7 16 58 PM" src="https://github.com/user-attachments/assets/be78db31-3759-418b-9884-dd001e9abcf3" />
 
-This repository does not include a license file. Add one if you intend to open source this project.
