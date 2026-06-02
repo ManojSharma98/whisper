@@ -25,7 +25,7 @@ interface SocketState {
   sendTyping: (chatId: string, isTyping: boolean) => void;
 }
 
-const SOCKET_URL = "https://whisper-eo7ha.sevalla.app";
+const SOCKET_URL = "https://whisper-reev0.sevalla.app";
 
 export const useSocketStore = create<SocketState>()((set, get) => ({
   socket: null,
