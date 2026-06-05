@@ -1,10 +1,10 @@
 # WHISPER
 
-WHISPER is a full-stack chat application with a Bun-based backend, an Expo mobile client, and a React + Vite web client.
+WHISPER is a full-stack chat application with a mongo-DB backend, an Expo mobile client, and a React + Vite web client.
 
 ## Repository structure
 
-- `backend/` — Express + Bun backend with MongoDB, Clerk auth, and Socket.IO for real-time chat.
+- `backend/` — MongoDB, Clerk auth, and Socket.IO for real-time chat.
 - `mobile/` — React Native mobile app built with Expo Router, Clerk auth, and socket.io-client.
 - `web/` — React web client powered by Vite and Clerk.
 - `Dockerfile` — builds the web frontend and backend inside a Bun container.
